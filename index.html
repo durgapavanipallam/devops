@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Simple Arithmetic Calculator</title>
+    <style>
+        /* Basic Styling */
+        body {
+            font-family: 'Arial', sans-serif;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #4CAF50; /* Green background */
+        }
+
+        h1 {
+            margin-bottom: 20px;
+            color: white;  /* White text for contrast */
+            font-weight: 700;
+            font-size: 2rem;
+            user-select: none;
+        }
+
+        .calculator {
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            width: 320px;
+        }
+
+        .calculator input {
+            width: 100%;
+            height: 50px;
+            font-size: 24px;
+            text-align: right;
+            padding: 10px;
+            margin-bottom: 20px;
+            border: 2px solid #ccc;
+            border-radius: 5px;
+            background-color: #f9f9f9;
+            user-select: none;
+        }
+
+        .button {
+            width: 70px;
+            height: 70px;
+            font-size: 24px;
+            margin: 10px;
+            border-radius: 10px;
+            border: none;
+            background-color: #90caf9; /* Light blue */
+            cursor: pointer;
+            transition: background-color 0.3s;
+            user-select: none;
+            color: #000;
+        }
+
+        .button:hover {
+            background-color: #64b5f6; /* Medium blue */
+        }
+
+        .button:active {
+            background-color: #42a5f5; /* Darker blue */
+        }
+
+        .button-double {
+            width: 150px;
+        }
+
+        .row {
+            display: flex;
+            justify-content: center;
+        }
+        
+        /* Additional Styles */
+        .equal-btn {
+            background-color: #1976d2; /* Strong blue */
+            color: white;
+        }
+
+        .equal-btn:hover {
+            background-color: #1565c0; /* Darker strong blue */
+        }
+
+        .clear-btn {
+            background-color: #1565c0; /* Dark blue for clear */
+            color: white;
+        }
+
+        .clear-btn:hover {
+            background-color: #0d47a1; /* Even darker */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Simple Calculator</h1>
+
+    <div class="calculator">
+        <!-- Display -->
+        <input type="text" id="display" disabled />
+
+        <!-- Buttons -->
+        <div class="row">
+            <button class="button clear-btn" onclick="clearDisplay()">C</button>
+            <button class="button" onclick="appendToDisplay('/')">/</button>
+            <button class="button" onclick="appendToDisplay('*')">*</button>
+        </div>
+
+        <div class="row">
+            <button class="button" onclick="appendToDisplay('7')">7</button>
+            <button class="button" onclick="appendToDisplay('8')">8</button>
+            <button class="button" onclick="appendToDisplay('9')">9</button>
+            <button class="button" onclick="appendToDisplay('-')">-</button>
+        </div>
+
+        <div class="row">
+            <button class="button" onclick="appendToDisplay('4')">4</button>
+            <button class="button" onclick="appendToDisplay('5')">5</button>
+            <button class="button" onclick="appendToDisplay('6')">6</button>
+            <button class="button" onclick="appendToDisplay('+')">+</button>
+        </div>
+
+        <div class="row">
+            <button class="button" onclick="appendToDisplay('1')">1</button>
+            <button class="button" onclick="appendToDisplay('2')">2</button>
+            <button class="button" onclick="appendToDisplay('3')">3</button>
+            <button class="button" onclick="appendToDisplay('.')">.</button>
+        </div>
+
+        <div class="row">
+            <button class="button button-double" onclick="appendToDisplay('0')">0</button>
+            <button class="button equal-btn" onclick="calculateResult()">=</button>
+        </div>
+    </div>
+
+    <script>
+        // Append clicked button to the display
+        function appendToDisplay(value) {
+            document.getElementById('display').value += value;
+        }
+
+        // Clear the display
+        function clearDisplay() {
+            document.getElementById('display').value = '';
+        }
+
+        // Calculate the result
+        function calculateResult() {
+            try {
+                const result = eval(document.getElementById('display').value);
+                document.getElementById('display').value = result;
+            } catch (e) {
+                document.getElementById('display').value = 'Error';
+            }
+        }
+
+        // Allow keyboard input for numbers and operations
+        window.addEventListener('keydown', function(event) {
+            const key = event.key;
+            const validKeys = '0123456789/*-+.'; 
+            
+            if (validKeys.includes(key)) {
+                appendToDisplay(key);
+            }
+            if (key === 'Enter') {
+                calculateResult();
+            }
+            if (key === 'Backspace') {
+                const display = document.getElementById('display');
+                display.value = display.value.slice(0, -1);
+            }
+        });
+    </script>
+
+</body>
+</html>
